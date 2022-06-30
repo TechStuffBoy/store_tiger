@@ -20,6 +20,13 @@
         <!-- Add navbar -->
         {% include "_nav.html" %}
 
+        <!-- Show any messages -->
+        {% if messages %}
+          {% for message in messages %}
+              <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+          {% endfor %}
+        {% endif %}
+
         <!-- Add other contents -->
         {% block content %}
 

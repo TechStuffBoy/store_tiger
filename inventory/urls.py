@@ -7,4 +7,5 @@ urlpatterns = [
     path('<int:pk>/', views.InventoryDetail.as_view(), name='inventory-detail'),
     path('add/', views.InventoryAdd.as_view(), name='inventory-add'),
     path('edit/<int:pk>/', views.InventoryEdit.as_view(), name='inventory-edit'),
+    path('upload-csv/', views.upload_csv, name='upload-csv'),
 ]

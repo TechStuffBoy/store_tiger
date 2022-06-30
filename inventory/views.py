@@ -1,9 +1,13 @@
+from django.db import IntegrityError
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse
 from django.db.models import Q
+from django.contrib import messages
 
 from inventory.models import Inventory
+
 
 
 # Create your views here.
@@ -50,5 +54,39 @@ class InventoryEdit(UpdateView):
             kwargs={'pk':self.kwargs['pk']}
         )
 
-def upload_csv_and_create(request):
-    pass
+def upload_csv(request):
+    if request.method == 'POST':
+        print('came here')
+
+        # Process the file
+        # print(request.FILES)
+        csv_file = request.FILES["csv_file"]
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request,'File is not CSV type')
+            return HttpResponseRedirect(reverse("inventory-list"))
+        
+        file_data = csv_file.read().decode("utf-8")
+        lines = file_data.split("\n")
+        lines = [line.strip() for line in lines]
+        print(lines)
+
+        # Loop through the list and append to the model
+        for line in lines:
+            fields = line.split(',')
+            print(fields)
+            try:
+                _ , created = Inventory.objects.update_or_create(
+                    product_name=fields[0],
+                    sku=fields[1],
+                    price=fields[2],
+                )
+            except IntegrityError as e:
+                messages.warning(request, f"{line} already there.. Please correct and try again!")
+                return HttpResponseRedirect(reverse("inventory-list"))
+
+        messages.success(request, 'Successfully created/updated all the entries')
+            
+
+        # Send the redirect to the inventory-list
+        return HttpResponseRedirect(reverse("inventory-list"))
+        
