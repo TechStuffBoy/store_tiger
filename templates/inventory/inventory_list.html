@@ -1,0 +1,35 @@
+{% extends '_base.html' %}
+
+{% block title %} Inventory List {% endblock title %}
+
+{% block content %}
+    <h1>Inventory List</h1>
+    <p class="float-right"> <a href="#" class="badge badge-danger">+ Add</a></p>
+    <hr>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">SKU</th>
+            <th scope="col">Price</th>
+            <th scope="col">Date</th>
+            <th scope="col">Updated at</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for inventory in inventories %}
+            <tr>
+                <th scope="row">{{ inventory.id }}</th>
+                <td>{{ inventory.product_name }}</td>
+                <td>{{ inventory.sku }}</td>
+                <td>$ {{ inventory.price }}</td>
+                <td>{{ inventory.date }}</td>
+                <td>{{ inventory.updated_at }}</td>
+              </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}
