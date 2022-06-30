@@ -4,7 +4,19 @@
 
 {% block content %}
     <h1>Inventory List</h1>
-    <p class="float-right"> <a href="{% url 'inventory-add' %}" class="badge badge-danger">+ Add</a></p>
+    <p class="float-right"> <a href="{% url 'inventory-add' %}" class="badge badge-danger">+ Add</a> <span><a href="{% url 'inventory-add' %}" class="badge badge-danger">+ Upload</a></span></p>
+    
+    <form action="" method="get" class="form-inline">
+        <input type="text" name="q" placeholder="Enter Keyword" value="{{ request.GET.q }}" class="form-control">
+        <!-- <select name="filter" class="form-control">
+            <option value="all">All</option>
+            <option value="people">People</option>
+            <option value="certification">Certification</option>
+            <option value="skillset">Skillset</option>
+        </select> -->
+        <input type="submit" value="Search" class="btn btn-default">
+    </form>
+    
     <hr>
 
     <table class="table">

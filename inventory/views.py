@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse
+from django.db.models import Q
 
 from inventory.models import Inventory
+
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -13,6 +15,18 @@ class InventoryList(ListView):
     model = Inventory
     template_name =  'inventory/inventory_list.html'
     context_object_name = 'inventories'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Inventory.objects.filter(
+                Q(product_name__icontains=query) |
+                Q(sku__icontains=query) |
+                Q(date__contains=query) |
+                Q(price__contains=query)
+            )
+        else:
+            return Inventory.objects.all()
 
 class InventoryDetail(DetailView):
     model = Inventory
@@ -35,3 +49,6 @@ class InventoryEdit(UpdateView):
             "inventory-detail",
             kwargs={'pk':self.kwargs['pk']}
         )
+
+def upload_csv_and_create(request):
+    pass
