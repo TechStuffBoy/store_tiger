@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
+from django.urls import reverse
 
 from inventory.models import Inventory
 
@@ -16,3 +17,21 @@ class InventoryList(ListView):
 class InventoryDetail(DetailView):
     model = Inventory
     context_object_name = 'inventory'
+
+class InventoryAdd(CreateView):
+    model = Inventory
+    fields = ['product_name', 'sku', 'price']
+
+    def get_success_url(self) -> str:
+        return reverse('inventory-list')
+
+class InventoryEdit(UpdateView):
+    model = Inventory
+    fields = ['product_name', 'sku', 'price']
+    action = 'Update'
+
+    def get_success_url(self):
+        return reverse(
+            "inventory-detail",
+            kwargs={'pk':self.kwargs['pk']}
+        )

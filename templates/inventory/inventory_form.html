@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+{% block title %} Add {% endblock title %}
+
+{% block content %}
+    {% with action=view.action|default:"Add" %}
+        <h1> {{ action }} form </h1>
+        <form method="post" action="."> {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">{{ action }}</button>
+        </form>
+    {% endwith %}
+{% endblock content %}

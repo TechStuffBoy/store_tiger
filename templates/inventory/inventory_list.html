@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Inventory List</h1>
-    <p class="float-right"> <a href="#" class="badge badge-danger">+ Add</a></p>
+    <p class="float-right"> <a href="{% url 'inventory-add' %}" class="badge badge-danger">+ Add</a></p>
     <hr>
 
     <table class="table">
@@ -16,20 +16,42 @@
             <th scope="col">Price</th>
             <th scope="col">Date</th>
             <th scope="col">Updated at</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
             {% for inventory in inventories %}
             <tr>
                 <th scope="row">{{ inventory.id }}</th>
+                <!-- <th scope="row"><a href="{% url 'inventory-edit' inventory.id %}">{{ inventory.id }}</a></th> -->
                 <td>{{ inventory.product_name }}</td>
                 <td>{{ inventory.sku }}</td>
                 <td>$ {{ inventory.price }}</td>
                 <td>{{ inventory.date }}</td>
                 <td>{{ inventory.updated_at }}</td>
+                <td><a class='btn btn-primary' href="{% url 'inventory-edit' inventory.id %}">Edit</a></td>
               </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Taken directly from the Django Documentation -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 
 {% endblock content %}
