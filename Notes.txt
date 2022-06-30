@@ -1,0 +1,7 @@
+1. We will be using the Django Stack for this project.
+2. We are using the sqlite as the database.
+3. Default user models is being migrated.
+4. Create superuser for the project
+    # admin/12iso*help
+5. Create an app called 'inventory'
+6. Add templates and static_directory
