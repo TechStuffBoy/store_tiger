@@ -7,6 +7,8 @@ class Inventory(models.Model):
     class Meta:
         verbose_name_plural = 'Inventory'
         unique_together = ('sku', 'product_name',)
+        ordering = ('-updated_at', ) # Added just now
+
 
     sku = models.CharField(max_length=32, blank=False)
     product_name = models.CharField(max_length=200, blank=False)

@@ -39,7 +39,8 @@
         <tbody>
             {% for inventory in inventories %}
             <tr>
-                <th scope="row">{{ inventory.id }}</th>
+                <!-- <th scope="row">{{ inventory.id }}</th> -->
+                <th scope="row"><a class='btn' href="{% url 'inventory-detail' inventory.id %}">{{ inventory.id }}</a></th>
                 <!-- <th scope="row"><a href="{% url 'inventory-edit' inventory.id %}">{{ inventory.id }}</a></th> -->
                 <td>{{ inventory.product_name }}</td>
                 <td>{{ inventory.sku }}</td>
