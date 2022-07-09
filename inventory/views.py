@@ -67,8 +67,8 @@ def upload_csv(request):
         
         file_data = csv_file.read().decode("utf-8")
         lines = file_data.split("\n")
-        lines = [line.strip() for line in lines]
-        print(lines)
+        lines = (line.strip() for line in lines) # changed to generator
+        # print(lines)
 
         # Loop through the list and append to the model
         for line in lines:
