@@ -82,7 +82,7 @@ def upload_csv(request):
                 )
             except IntegrityError as e:
                 messages.warning(request, f"{line} already there.. Please correct and try again!")
-                return HttpResponseRedirect(reverse("inventory-list"))
+                # return HttpResponseRedirect(reverse("inventory-list")) # Dont redirect, continue with other inputs
 
         messages.success(request, 'Successfully created/updated all the entries')
             
